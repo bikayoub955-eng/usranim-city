@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usranim City</title>
+
+  <!-- 1. كود إعلان Monetag -->
+  <script src="https://alwingulla.com/88/tag.min.js" data-zone="11638184" async data-cfasync="false"></script>
+
+  <style>
+    body {
+      margin: 0;
+      background: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #game-box {
+      width: 280px;
+      height: 280px;
+      background: #1e1e1e;
+      border: 2px solid #00e676;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    #player {
+      width: 30px;
+      height: 30px;
+      background: #00e676;
+      border-radius: 50%;
+      position: absolute;
+      top: 125px;
+      left: 125px;
+      transition: 0.1s;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      background: #00e676;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Usranim City</h1>
+  <p>النقاط: <span id="score">0</span></p>
+
+  <!-- منطقة اللعبة -->
+  <div id="game-box">
+    <div id="player"></div>
+  </div>
+
+  <!-- أزرار التحكم والتشغيل -->
+  <div>
+    <button onclick="movePlayer()">تحريك اللاعب 🎮</button>
+    <button onclick="watchAdForReward()" style="background: #ff9800;">مكافأة إعلان 🎁</button>
+  </div>
+
+  <script>
+    let score = 0;
+    const player = document.getElementById('player');
+    const scoreDisplay = document.getElementById('score');
+
+    // 2. تحريك اللاعب
+    function movePlayer() {
+      const randomX = Math.floor(Math.random() * 250);
+      const randomY = Math.floor(Math.random() * 250);
+      
+      player.style.left = randomX + 'px';
+      player.style.top = randomY + 'px';
+      
+      score += 10;
+      scoreDisplay.innerText = score;
+    }
+
+    // 3. تشغيل الإعلان والتحقق من وجود الدالة
+    function watchAdForReward() {
+      if (typeof show_11638184 === 'function') {
+        show_11638184().then(() => {
+          score += 100;
+          scoreDisplay.innerText = score;
+          alert('شكراً لمشاهدة الإعلان! تم إحراز 100 نقطة إضافية 🎉');
+        }).catch((err) => {
+          // إضافة النقاط حتى لو فشل عرض الإعلان لتجربة المستخدم
+          score += 100;
+          scoreDisplay.innerText = score;
+          alert('تم إضافة 100 نقطة مكافأة! 🎉');
+        });
+      } else {
+        // إذا لم يتحمل السكربت بعد، نمنحه المكافأة لتفادي تعطل اللعبة
+        score += 100;
+        scoreDisplay.innerText = score;
+        alert('تم منحك المكافأة! 🎉');
+      }
+    }
+  </script>
+
+</body>
+</html>
+
